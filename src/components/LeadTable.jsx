@@ -3,24 +3,7 @@ import Modal from './Modal';
 import AddLeadForm from './AddLeadForm';
 import DeleteForm from './DeleteForm';
 
-const leadData = [
-    {
-        "id": 1,
-        "updated_at": "2019-06-12T12:11:39.127842Z",
-        "created_at": "2019-06-12T12:11:39.127901Z",
-        "first_name": "Nilesh",
-        "last_name": "Agarwal",
-        "mobile": "9871028111",
-        "email": "abc@gmail.com",
-        "location_type": "City",
-        "location_string": "India",
-        "status": "Created",
-        "communication": null,
-        "tags": null
-    }
-];
-
-const leadDataRows = (data) => {
+const leadDataRows = (data, onDeleteClick, addComm) => {
   return (data.map((d)=> {
     return (
       <tr key={d.id}>
@@ -29,10 +12,11 @@ const leadDataRows = (data) => {
         <td className='data-box'>{d.mobile}</td>
         <td className='data-box'>{d.location_type}</td>
         <td className='data-box'>{d.location_string}</td>
-        <td className='data-box'><i class="material-icons">
+        <td className='data-box'>
+        <i class="material-icons" onClick={addComm}>
             create
         </i>
-        <i class="material-icons">
+        <i class="material-icons" onClick={onDeleteClick}>
             delete
         </i></td>
       </tr>
@@ -42,6 +26,7 @@ const leadDataRows = (data) => {
 }
 
 const LeadTable = (props) => {
+  const { data, onDeleteClick, addComm } = props;
   const [open, toggleModal] = useState(0);    
   return (
     <div className='row'>
@@ -57,13 +42,9 @@ const LeadTable = (props) => {
         </tr>
         </thead>
         <tbody>
-         {leadDataRows(leadData)}
+         {leadDataRows(data, onDeleteClick, addComm)}
         </tbody>
       </table>
-      <button onClick={()=>{toggleModal(true)}}>Test</button>
-      <Modal open={open}>
-        <DeleteForm onClose={()=>{toggleModal(false)}}/>
-      </Modal>
     </div>
   )
 }

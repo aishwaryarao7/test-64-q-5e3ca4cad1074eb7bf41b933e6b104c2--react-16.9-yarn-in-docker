@@ -1,17 +1,46 @@
 import React from 'react';
 import './styles/styles.css';
 import LeadTable from './components/LeadTable';
+import AddLeadForm from './components/AddLeadForm';
+import DeleteForm from './components/DeleteForm';
+import Modal from './components/Modal';
+import CommForm from './components/CommForm';
 
-function App() {
-  return (
-    <div className="App">
-      <div className='cj-row'>
-        <button className='cj-button'>Add Lead</button>
-        <input className='cj-search' placeholder='Search Lead' onChange={(e)=>{console.log(e.target.value)}} />   
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { data: [], addLead: false, deleteLead: false, addComm: false };
+  }
+
+  async componentDidMount() {
+    const response = await fetch('http://localhost:8080/api/leads/?location_string=India', {
+      method: 'GET',
+    });
+    const json = await response.json();
+    this.setState({ data: json});
+  }
+
+  render() {
+    const { data, addLead, deleteLead, addComm } = this.state;
+    return (
+      <div className="App">
+        <div className='cj-row'>
+          <button className='cj-button' onClick={()=>{this.setState({addLead: true})}}>Add Lead</button>
+          <input className='cj-search' placeholder='Search Lead' onChange={(e)=>{console.log(e.target.value)}} />   
+        </div>
+        <LeadTable data={data} onDeleteClick={()=>{this.setState({deleteLead: true});}} addComm={()=>{this.setState({addComm: true})}} />
+        <Modal open={addLead}>
+          <AddLeadForm onClose={()=>{ this.setState({addLead: false}); }}/>
+        </Modal>
+        <Modal open={deleteLead}>
+          <DeleteForm onClose={()=>{ this.setState({deleteLead: false}) }}/>
+        </Modal>
+        <Modal open={addComm}>
+          <CommForm onClose={()=>{ this.setState({addComm: false}) }}/>
+        </Modal>
       </div>
-      <LeadTable />
-    </div>
-  );
+    );
+  }
 }
 
 export default App;
