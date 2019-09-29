@@ -1,24 +1,15 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './styles/styles.css';
+import LeadTable from './components/LeadTable';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='cj-row'>
+        <button className='cj-button'>Add Lead</button>
+        <input className='cj-search' placeholder='Search Lead' onChange={(e)=>{console.log(e.target.value)}} />   
+      </div>
+      <LeadTable />
     </div>
   );
 }

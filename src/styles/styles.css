@@ -1,0 +1,46 @@
+.App {
+  margin: 15px 40px;
+}
+
+.cj-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.cj-button {
+  padding: 5px 10px;
+  border-radius: 3px;
+  background-color: black;
+  color: white;
+}
+
+.cj-search {
+  padding: 5px 10px;
+  border-radius: 3px;
+  border-style: solid;
+  border-color: #D3D3D3;
+  border-width: 1px;
+}
+
+.cj-table-header {
+  background-color: black;
+  color: white;
+  padding: 5px 10px;
+  border-color: white;
+  border-width: 0.1px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.cj-table {
+  width: 100%;
+  border-color: #D3D3D3;
+  border-width: 1.5px;
+}
+
+.data-box {
+  padding: 5px 10px 19px 10px;
+  color: black;
+  background-color: #DCDCDC;
+}
