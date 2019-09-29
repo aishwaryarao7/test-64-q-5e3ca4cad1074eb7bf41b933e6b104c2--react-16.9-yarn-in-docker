@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
+import Modal from './Modal';
+import AddLeadForm from './AddLeadForm';
+import DeleteForm from './DeleteForm';
 
 const leadData = [
     {
@@ -26,7 +29,12 @@ const leadDataRows = (data) => {
         <td className='data-box'>{d.mobile}</td>
         <td className='data-box'>{d.location_type}</td>
         <td className='data-box'>{d.location_string}</td>
-        <td className='data-box'>{'temp'}</td>
+        <td className='data-box'><i class="material-icons">
+            create
+        </i>
+        <i class="material-icons">
+            delete
+        </i></td>
       </tr>
     )
   })
@@ -34,6 +42,7 @@ const leadDataRows = (data) => {
 }
 
 const LeadTable = (props) => {
+  const [open, toggleModal] = useState(0);    
   return (
     <div className='row'>
       <table className='cj-table'>
@@ -51,6 +60,10 @@ const LeadTable = (props) => {
          {leadDataRows(leadData)}
         </tbody>
       </table>
+      <button onClick={()=>{toggleModal(true)}}>Test</button>
+      <Modal open={open}>
+        <DeleteForm onClose={()=>{toggleModal(false)}}/>
+      </Modal>
     </div>
   )
 }
