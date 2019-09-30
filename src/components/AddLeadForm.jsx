@@ -3,7 +3,7 @@ import React from 'react';
 class AddLeadForm extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = {firstName: '', lastName: '', email: '', mobile: '', locString: '', locType: ''}
+    this.state = {firstName: '', lastName: '', email: '', mobile: '', locString: 'India', locType: 'Country'}
   }
 
   onFormSubmit(onAdd) {
