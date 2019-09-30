@@ -1,7 +1,4 @@
-import React, {useState} from 'react';
-import Modal from './Modal';
-import AddLeadForm from './AddLeadForm';
-import DeleteForm from './DeleteForm';
+import React from 'react';
 
 const leadDataRows = (data, onDeleteClick, addComm, setId) => {
   return (data.map((d)=> {
@@ -13,10 +10,10 @@ const leadDataRows = (data, onDeleteClick, addComm, setId) => {
         <td className='data-box'>{d.location_type}</td>
         <td className='data-box'>{d.location_string}</td>
         <td className='data-box'>
-        <i class="material-icons" onClick={()=> { setId(d.id); addComm(); }}>
+        <i className="material-icons" onClick={()=> { setId(d.id); addComm(); }}>
             create
         </i>
-        <i class="material-icons" onClick={()=> { onDeleteClick(); setId(d.id); }}>
+        <i className="material-icons" onClick={()=> { onDeleteClick(); setId(d.id); }}>
             delete
         </i></td>
       </tr>
@@ -27,7 +24,6 @@ const leadDataRows = (data, onDeleteClick, addComm, setId) => {
 
 const LeadTable = (props) => {
   const { data, onDeleteClick, addComm, setId } = props;
-  const [open, toggleModal] = useState(0);    
   return (
     <div className='row'>
       <table className='cj-table'>

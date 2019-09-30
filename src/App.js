@@ -12,20 +12,25 @@ class App extends React.Component {
     this.state = { data: [], addLead: false, deleteLead: false, addComm: false, id: ''};
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.apiCall();
+  }
+
+  async apiCall() {
     const response = await fetch('http://localhost:8080/api/leads/?location_string=India', {
       method: 'GET',
     });
     const json = await response.json();
-    this.setState({ data: json});
+    this.setState({ data: json });
   }
 
-  addNewLead(newLead) {
+  addNewLead = (newLead) => {
     fetch('http://localhost:8080/api/leads/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body:JSON.stringify(newLead)
     });
+    this.apiCall();
   }
 
   onDeleteLead(id) {
@@ -34,10 +39,11 @@ class App extends React.Component {
     });
   }
 
-  onCommUpdate(body) {
-    fetch(`http://localhost:8080/api/mark_lead/${this.state.id}/`, {
+  onCommUpdate(text, id) {
+    fetch(`http://localhost:8080/api/mark_lead/${id}/`, {
       method: 'PUT',
-      body: JSON.stringify(body)
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({"communication": text})
     });
   }
 
@@ -61,7 +67,7 @@ class App extends React.Component {
           <DeleteForm onDelete={()=>{this.onDeleteLead(id)}} onClose={()=>{ this.setState({deleteLead: false}) }}/>
         </Modal>
         <Modal open={addComm}>
-          <CommForm onCommUpdate={this.onCommUpdate} onClose={()=>{ this.setState({addComm: false}) }}/>
+          <CommForm id={id} onCommUpdate={this.onCommUpdate} onClose={()=>{ this.setState({addComm: false}) }}/>
         </Modal>
       </div>
     );
