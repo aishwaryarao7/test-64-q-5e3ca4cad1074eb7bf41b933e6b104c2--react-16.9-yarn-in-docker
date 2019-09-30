@@ -3,7 +3,7 @@ import Modal from './Modal';
 import AddLeadForm from './AddLeadForm';
 import DeleteForm from './DeleteForm';
 
-const leadDataRows = (data, onDeleteClick, addComm) => {
+const leadDataRows = (data, onDeleteClick, addComm, setId) => {
   return (data.map((d)=> {
     return (
       <tr key={d.id}>
@@ -16,7 +16,7 @@ const leadDataRows = (data, onDeleteClick, addComm) => {
         <i class="material-icons" onClick={addComm}>
             create
         </i>
-        <i class="material-icons" onClick={onDeleteClick}>
+        <i class="material-icons" onClick={()=> { onDeleteClick(); setId(d.id); }}>
             delete
         </i></td>
       </tr>
@@ -26,7 +26,7 @@ const leadDataRows = (data, onDeleteClick, addComm) => {
 }
 
 const LeadTable = (props) => {
-  const { data, onDeleteClick, addComm } = props;
+  const { data, onDeleteClick, addComm, setId } = props;
   const [open, toggleModal] = useState(0);    
   return (
     <div className='row'>

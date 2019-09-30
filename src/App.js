@@ -9,7 +9,7 @@ import CommForm from './components/CommForm';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data: [], addLead: false, deleteLead: false, addComm: false };
+    this.state = { data: [], addLead: false, deleteLead: false, addComm: false, id: ''};
   }
 
   async componentDidMount() {
@@ -20,20 +20,39 @@ class App extends React.Component {
     this.setState({ data: json});
   }
 
+  addNewLead(newLead) {
+    fetch('http://localhost:8080/api/leads/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:JSON.stringify({newLead})
+    });
+  }
+
+  onDeleteLead() {
+    const id = this.state.id;
+    fetch('http://localhost:8080/api/leads/:id/', {
+      method: 'DELETE',
+    });
+  }
+
+  setId = (value) => {
+    this.setState({ id: value });
+  }
+
   render() {
     const { data, addLead, deleteLead, addComm } = this.state;
     return (
       <div className="App">
         <div className='cj-row'>
           <button className='cj-button' onClick={()=>{this.setState({addLead: true})}}>Add Lead</button>
-          <input className='cj-search' placeholder='Search Lead' onChange={(e)=>{console.log(e.target.value)}} />   
+          <input className='cj-search' placeholder='Search Lead' />   
         </div>
-        <LeadTable data={data} onDeleteClick={()=>{this.setState({deleteLead: true});}} addComm={()=>{this.setState({addComm: true})}} />
+        <LeadTable data={data} onDeleteClick={()=>{this.setState({deleteLead: true}); }} setId={this.setId} addComm={()=>{this.setState({addComm: true})}} />
         <Modal open={addLead}>
-          <AddLeadForm onClose={()=>{ this.setState({addLead: false}); }}/>
+          <AddLeadForm onClose={()=>{ this.setState({addLead: false}); }} onAdd={this.addNewLead} />
         </Modal>
         <Modal open={deleteLead}>
-          <DeleteForm onClose={()=>{ this.setState({deleteLead: false}) }}/>
+          <DeleteForm onDelete={this.onDeleteLead} onClose={()=>{ this.setState({deleteLead: false}) }}/>
         </Modal>
         <Modal open={addComm}>
           <CommForm onClose={()=>{ this.setState({addComm: false}) }}/>

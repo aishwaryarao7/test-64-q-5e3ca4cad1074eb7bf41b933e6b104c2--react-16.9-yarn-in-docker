@@ -1,7 +1,7 @@
 import React from 'react';
 
 const DeleteForm = (props) => {
-    const { onClose } = props;
+    const { onClose, onDelete } = props;
   return (
     <div style={{fontSize: 13, fontWeight: '600', width: 500 }}>
       <div className='modal-header' style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
