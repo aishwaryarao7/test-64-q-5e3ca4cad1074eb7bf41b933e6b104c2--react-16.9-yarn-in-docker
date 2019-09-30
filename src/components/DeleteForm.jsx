@@ -11,7 +11,7 @@ const DeleteForm = (props) => {
         </i>
       </div>
       <div className='row' style={{ marginBottom: 10, marginTop: 10 }}>
-        <button onClick={onClose} className='secondary-button'>
+        <button onClick={()=>{ onClose(); onDelete(); }} className='secondary-button'>
           Confirm
         </button>
         <button onClick={onClose} className='secondary-button'>

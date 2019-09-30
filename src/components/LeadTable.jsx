@@ -13,7 +13,7 @@ const leadDataRows = (data, onDeleteClick, addComm, setId) => {
         <td className='data-box'>{d.location_type}</td>
         <td className='data-box'>{d.location_string}</td>
         <td className='data-box'>
-        <i class="material-icons" onClick={addComm}>
+        <i class="material-icons" onClick={()=> { setId(d.id); addComm(); }}>
             create
         </i>
         <i class="material-icons" onClick={()=> { onDeleteClick(); setId(d.id); }}>
@@ -42,7 +42,7 @@ const LeadTable = (props) => {
         </tr>
         </thead>
         <tbody>
-         {leadDataRows(data, onDeleteClick, addComm)}
+         {leadDataRows(data, onDeleteClick, addComm, setId)}
         </tbody>
       </table>
     </div>

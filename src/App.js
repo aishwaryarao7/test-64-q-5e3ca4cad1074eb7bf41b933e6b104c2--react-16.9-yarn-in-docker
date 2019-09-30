@@ -24,14 +24,20 @@ class App extends React.Component {
     fetch('http://localhost:8080/api/leads/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body:JSON.stringify({newLead})
+      body:JSON.stringify(newLead)
     });
   }
 
-  onDeleteLead() {
-    const id = this.state.id;
-    fetch('http://localhost:8080/api/leads/:id/', {
+  onDeleteLead(id) {
+    fetch(`http://localhost:8080/api/leads/${id}/`, {
       method: 'DELETE',
+    });
+  }
+
+  onCommUpdate(body) {
+    fetch(`http://localhost:8080/api/mark_lead/${this.state.id}/`, {
+      method: 'PUT',
+      body: JSON.stringify(body)
     });
   }
 
@@ -40,7 +46,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { data, addLead, deleteLead, addComm } = this.state;
+    const { data, addLead, deleteLead, addComm, id } = this.state;
     return (
       <div className="App">
         <div className='cj-row'>
@@ -52,10 +58,10 @@ class App extends React.Component {
           <AddLeadForm onClose={()=>{ this.setState({addLead: false}); }} onAdd={this.addNewLead} />
         </Modal>
         <Modal open={deleteLead}>
-          <DeleteForm onDelete={this.onDeleteLead} onClose={()=>{ this.setState({deleteLead: false}) }}/>
+          <DeleteForm onDelete={()=>{this.onDeleteLead(id)}} onClose={()=>{ this.setState({deleteLead: false}) }}/>
         </Modal>
         <Modal open={addComm}>
-          <CommForm onClose={()=>{ this.setState({addComm: false}) }}/>
+          <CommForm onCommUpdate={this.onCommUpdate} onClose={()=>{ this.setState({addComm: false}) }}/>
         </Modal>
       </div>
     );
